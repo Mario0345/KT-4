@@ -1,8 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+class ButtonProvider with ChangeNotifier {
+  bool _isPressed = false;
+
+  bool get isChecked => _isPressed;
+
+  set isChecked(bool value) {
+    _isPressed = value;
+    notifyListeners();
+  }
+}
+
+class CheckboxProvider with ChangeNotifier {
+  bool _isChecked = false;
+
+  bool get isChecked => _isChecked;
+
+  set isChecked(bool value) {
+    _isChecked = value;
+    notifyListeners();
+  }
+}
 
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -20,16 +45,28 @@ class LoginPage extends StatelessWidget {
                     child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
                     child: Container(
-                      width: 665,
-                      height: 698,
+                      // width: 665,
+                      // height: 698,
                       child: Stack(
                         children: [
                           Positioned(
-                            right: 540,
-                            top: 55,
+                            right: 480,
+                            top: 0,
                             child: Container(
-                              width: 698,
-                              height: 665,
+                              // alignment: Alignment.topCenter,
+                              width: 276,
+                              height: 66,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(image: AssetImage('lib/images/mdex 2.jpg'))
+                              ),
+                            ),
+                            ),
+                          Positioned(
+                            right: 600,
+                            top: 80,
+                            child: Container(
+                              width: 665,
+                              height: 698,
                               decoration: BoxDecoration(
                                 image: DecorationImage(image: AssetImage('lib/images/background-mdex.png'))
                               ),
@@ -88,9 +125,14 @@ class LoginPage extends StatelessWidget {
       @override
       Widget Column_insideLBox_(BuildContext context){
         return Container(
+          width: 620,
+          height: 550,
           child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            SizedBox(
+              height: 30,
+            ),
             Container(
               alignment: Alignment.center,
               // color: Colors.amber,
@@ -99,18 +141,21 @@ class LoginPage extends StatelessWidget {
               child: RichText(text: TextSpan(
                 children: [
                   TextSpan(
-                    text: "Let's go please",
+                    text: "Sign in to your account",
                     style: TextStyle(fontSize: 24),
                   ),
                 ],
               ),),
+            ),
+            SizedBox(
+              height: 75,
             ),
             Container(
               alignment: Alignment.bottomLeft,
               width: 336,
               height: 22,
               child:
-              const Text("Email",
+              const Text("Username or email",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 13,
@@ -129,6 +174,9 @@ class LoginPage extends StatelessWidget {
                   fillColor: Color.fromARGB(255, 61, 65, 74),
                 ),
               ),
+            ),
+            SizedBox(
+              height: 25,
             ),
              Container(
               alignment: Alignment.bottomLeft,
@@ -157,6 +205,136 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
             ),
+            SizedBox(
+              height: 35,
+            ),
+            Container(
+              width: 336,
+              child: Row(
+                children: [
+                  SizedBox(
+                height: 37,
+              ),
+              Container(
+                color: Colors.white,
+                width: 12,
+                height: 12,
+                child: ChangeNotifierProvider(
+                  create: (_) => CheckboxProvider(),
+                  child: Consumer<CheckboxProvider>(
+                    builder: (context, checkboxProvider, _) => Checkbox(
+                      checkColor: Colors.black,
+                      activeColor: Color.fromARGB(255, 255, 103, 64),
+                      value: checkboxProvider._isChecked,
+                      onChanged: (value) {
+                        checkboxProvider.isChecked = value ?? true;
+                      }
+                    ),
+                  ),
+                  ),
+              ),
+              SizedBox(width: 10),
+              SizedBox(
+                child:Text("Remember me",
+                style: TextStyle(color: Colors.white),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(right: 110),
+              ),
+              SizedBox(
+                child: Text("Forgot Password?",
+                style: TextStyle(color: Color.fromARGB(255, 255, 103, 64),),
+                ),
+              ),
+            ],
+              ),
+            ),
+            SizedBox(
+              height: 35,
+            ),
+            Container(
+              width: 336,
+              child:  ChangeNotifierProvider(
+                create: (_) => ButtonProvider(),
+                child: Consumer<ButtonProvider>(
+                  builder: (context, checkboxProvider, _) => 
+                  OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  minimumSize: Size(336, 37),
+                  textStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 13,
+                    
+                    ),
+                    backgroundColor: Color.fromARGB(255, 255, 103, 64),
+                ),
+                child: Text("Sign In",
+                style: TextStyle(color: Colors.white,),
+                ),
+                onPressed: () => {
+                  ButtonProvider(),
+                }
+              ),
+                ),
+              ),
+              
+            ),
+            Container(
+              width: 336,
+              alignment: Alignment.centerLeft,
+              child: SizedBox(
+                child:Text("Try another way",
+                style: TextStyle(color: Color.fromARGB(255, 255, 103, 64),),
+                ),
+              ),
+            ),
+
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    width: 665,
+                    height: 58,
+                    // alignment: Alignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("New user?",
+                        style: TextStyle(color: Colors.white,),
+                        ),
+                        SizedBox(
+                          width: 19,
+                        ),
+                        Text("Register",
+                        style: TextStyle(color: Color.fromARGB(255, 255, 103, 64),),
+                        ),
+
+                      ],
+                    ),
+                    // child: RichText(text: TextSpan(
+                    //   children: [
+                    //     TextSpan(
+                    //       text: "New user?",
+                    //       style: TextStyle(color: Colors.white,),
+                    //     ),
+                    //     TextSpan(),
+                    //     TextSpan(
+                    //       text: "Register",
+                    //       style: TextStyle(color: Color.fromARGB(255, 255, 103, 64),),
+                    //     ),
+                    //   ], 
+                    // ),
+                    // ),
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 46, 47, 55),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            
           ],
         ),
         );
